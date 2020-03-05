@@ -35,6 +35,9 @@ spec:
     - port: 8080
       protocol: TCP
       name: "8080"
+    - port: 9002
+      protocol: TCP
+      name: "9002"      
   clusterIP: None
 ---
 apiVersion: v1
@@ -152,6 +155,8 @@ data:
         echo "erlang.distribution.port_range.minimum = 9100" >> /vernemq/etc/vernemq.conf
         echo "erlang.distribution.port_range.maximum = 9109" >> /vernemq/etc/vernemq.conf
         echo "listener.tcp.default = ${IP_ADDRESS}:1883" >> /vernemq/etc/vernemq.conf
+        echo "listener.wss.default = ${IP_ADDRESS}:9002" >> /vernemq/etc/vernemq.conf
+        echo "listener.wss.require_certificate = off" >> /vernemq/etc/vernemq.conf
         echo "listener.ws.default = ${IP_ADDRESS}:8080" >> /vernemq/etc/vernemq.conf
         echo "listener.vmq.clustering = ${IP_ADDRESS}:44053" >> /vernemq/etc/vernemq.conf
         echo "listener.http.metrics = ${IP_ADDRESS}:8888" >> /vernemq/etc/vernemq.conf

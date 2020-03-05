@@ -123,7 +123,7 @@ spec:
           - path: /(mqtt?.*)
             backend:
               serviceName: {{ .Release.Name }}-adapter-mqtt
-              servicePort: 8080
+              servicePort: 9002 #8080
 {{- if .Values.ingress.tls }}
   tls:
     - hosts:
