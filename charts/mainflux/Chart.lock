@@ -26,5 +26,8 @@ dependencies:
 - name: influxdb
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 3.1.1
-digest: sha256:d1d5171b5f6bee6f2fbccfd7e579c5d0120c5e0acd9cac5db439db9063e3eb55
-generated: "2020-01-15T18:23:14.761400895+01:00"
+- name: mosquitto
+  repository: https://halkeye.github.io/helm-charts/
+  version: 0.1.0
+digest: sha256:8f2d8419b996f6610213a6ce2d317f4f91cf26ed34bc1b9867637bd5d786091d
+generated: "2020-05-19T16:22:33.634695484+02:00"

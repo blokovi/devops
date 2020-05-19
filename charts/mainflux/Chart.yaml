@@ -50,3 +50,6 @@ dependencies:
   - name: influxdb
     version: "3.1.1"
     repository: "@stable"
+  - name: mosquitto
+    version: "0.1.0"
+    repository: "@halkeye"    

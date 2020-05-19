@@ -6,6 +6,7 @@ Helm Chart for the Mainflux IoT Platform
 
 - Helm v3
 - Stable Helm repo installed (`helm repo add stable https://kubernetes-charts.storage.googleapis.com/`)
+- Halkey Helm repo installed (`helm repo add halkeye https://halkeye.github.io/helm-charts/`)
 - Nginx Ingress Controller
 - If using the mTLS setup:
   - Certificate/Key installed as **TLS secret**

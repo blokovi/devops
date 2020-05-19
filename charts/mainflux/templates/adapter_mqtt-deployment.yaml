@@ -328,7 +328,7 @@ spec:
             - name: MF_JAEGER_URL
               value: {{ .Release.Name }}-jaeger-operator-jaeger-agent:6831
             - name: MF_MQTT_ADAPTER_MQTT_TARGET_HOST
-              value: localhost
+              value: {{ .Release.Name }}-mosquitto
             - name: MF_MQTT_ADAPTER_MQTT_TARGET_PORT
               value: "{{ .Values.mqtt.broker.mqtt_port }}"
             - name: MF_MQTT_ADAPTER_WS_TARGET_HOST
