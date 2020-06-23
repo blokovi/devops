@@ -37,8 +37,8 @@ data:
       ssl_protocols TLSv1.2 TLSv1.3;
       ssl_prefer_server_ciphers on;
 
-      js_include authorization.js;
-      js_set $auth_key setKey;
+      # js_include authorization.js;
+      # js_set $auth_key setKey;
 
       server {
         listen 80 default_server;
@@ -52,10 +52,10 @@ data:
         ssl_certificate /etc/ssl/certs/nginx-mtls/tls.crt;
         ssl_certificate_key /etc/ssl/certs/nginx-mtls/tls.key;
         # Intermediate CA cert:
-        ssl_client_certificate /etc/ssl/certs/nginx-mtls-intermediate/intermediate.crt;
+        # ssl_client_certificate /etc/ssl/certs/nginx-mtls-intermediate/intermediate.crt;
         # ssl_crl /etc/ssl/certs/crl.pem;
-        ssl_verify_client optional;
-        ssl_verify_depth 2;
+        # ssl_verify_client optional;
+        # ssl_verify_depth 2;
         ssl_dhparam /etc/ssl/certs/dhparam.pem;
 
         ssl_protocols TLSv1.2 TLSv1.3;
@@ -135,7 +135,7 @@ data:
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_set_header Authorization $auth_key;
+          # proxy_set_header Authorization $auth_key;
           proxy_pass http://{{ .Release.Name }}-adapter-http:8185/;
 
           # Allow OPTIONS method CORS
@@ -181,7 +181,7 @@ data:
 
     # MQTT and LoRa MQTT
     stream {
-      js_include authorization.js;
+      # js_include authorization.js;
       # MQTT
       server {
           listen 8883 ssl;
@@ -191,11 +191,11 @@ data:
           # a volume in the docker/docker-compose.yml file.
           ssl_certificate /etc/ssl/certs/nginx-mtls/tls.crt;
           ssl_certificate_key /etc/ssl/certs/nginx-mtls/tls.key;
-          ssl_client_certificate /etc/ssl/certs/nginx-mtls-intermediate/intermediate.crt;
+          ssl_client_certificate /etc/ssl/certs/nginx-mtls/tls.crt;
           # FIXME
           # ssl_crl /etc/ssl/certs/crl.pem;
-          ssl_verify_client on;
-          ssl_verify_depth 2;
+          # ssl_verify_client on;
+          # ssl_verify_depth 2;
           ssl_dhparam /etc/ssl/certs/dhparam.pem;
 
           ssl_protocols TLSv1.2 TLSv1.3;
@@ -205,7 +205,7 @@ data:
           ssl_session_tickets off;
           resolver 8.8.8.8 8.8.4.4 valid=300s;
               resolver_timeout 5s;
-          js_preread authenticate;
+          # js_preread authenticate;
 
           proxy_pass {{ .Release.Name }}-envoy:1883;
       }
@@ -468,6 +468,9 @@ spec:
               subPath: intermediate.crt
             - mountPath: /etc/ssl/certs/nginx-mtls
               name: nginx-mtls-tls
+            # - mountPath: /etc/ssl/certs/ca.crt
+            #   name: nginx-ca
+            #   subPath: ca.crt
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       shareProcessNamespace: true
@@ -497,6 +500,9 @@ spec:
         - name: nginx-mtls-tls
           secret:
             secretName: {{ .Values.nginx_internal.mtls.tls }}
+        # - name: nginx-ca
+        #   secret:
+        #     secretName: {{ .Values.nginx_internal.ca }}
 ---
 
 apiVersion: v1

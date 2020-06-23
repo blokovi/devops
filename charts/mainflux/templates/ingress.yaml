@@ -52,10 +52,6 @@ spec:
     - host: "{{ .Values.ingress.hostname }}"
       http:
         paths:
-          - path: /grafana/?(.*)
-            backend:
-              serviceName: grafana
-              servicePort: 3000
           - path: /(users)
             backend:
               serviceName: {{ .Release.Name }}-users

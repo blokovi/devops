@@ -7,4 +7,7 @@ kubectl -n mf create secret tls nginx-internal-mtls-tls \
     --cert nginx-internal-mtls.crt
 
 kubectl -n mf create secret generic nginx-internal-mtls-intermediate-crt \
-    --from-file=intermediate.crt=nginx-internal-mtls-intermediate.crt
+    --from-file=intermediate.crt=ca.crt
+
+# kubectl -n mf create secret generic nginx-ca \
+#     --from-file=ca.crt=ca.crt    
