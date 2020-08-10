@@ -51,10 +51,6 @@ spec:
     - host: "{{ .Values.ingress.hostname }}"
       http:
         paths:
-          - path: /grafana/?(.*)
-            backend:
-              serviceName: grafana
-              servicePort: 3000
           - path: /(users)
             backend:
               serviceName: {{ .Release.Name }}-users
@@ -150,4 +146,4 @@ data:
   8883: "{{ .Release.Namespace }}/{{ .Release.Name }}-nginx-internal:8883:PROXY"
 metadata:
   name: tcp-services
-  namespace: {{ .Release.Namespace }}
+  namespace: ingress-nginx

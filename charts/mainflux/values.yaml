@@ -15,20 +15,20 @@ ingress:
   annotations: {}
   labels: {}
   # Uncomment this block for TLS support in public ingress
-  # hostname: ""
-  # tls:
-  #   hostname: ""
-  #   secret: "mainflux-server"
+  hostname: "mainflux.ga"
+  tls:
+    hostname: "mainflux.ga"
+    secret: "mainflux-server"
 
 nginx_internal:
   mtls:
     # By default mTLS is disabled. If you use mTLS, comment this block.
-    tls: ""
-    intermediate_crt: ""
+    # tls: ""
+    # intermediate_crt: ""
     # Uncomment this block for TLS and mTLS support.
     # Use sh script from /secrets/secrets.sh to create config maps with your certs
-    # tls: "mainflux-server"
-    # intermediate_crt: "ca"
+    tls: "mainflux-server"
+    intermediate_crt: "ca"
 
 adapter_http:
   image: {}
