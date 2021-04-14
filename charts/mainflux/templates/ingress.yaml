@@ -51,6 +51,10 @@ spec:
     - host: "{{ .Values.ingress.hostname }}"
       http:
         paths:
+          - path: /(users/profile)
+            backend:
+              serviceName: {{ .Release.Name }}-users
+              servicePort: {{ .Values.users.httpPort }}
           - path: /(password?.*)
             backend:
               serviceName: {{ .Release.Name }}-users
@@ -205,7 +209,7 @@ kind: Ingress
 metadata:
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      limit_except OPTIONS GET HEAD PUT DELETE  {
+      limit_except PUT  {
           deny all;
       }
     nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -222,7 +226,7 @@ spec:
     - host: "{{ .Values.ingress.hostname }}"
       http:
         paths:
-          - path: /(users?.*)
+          - path: /(users)
             backend:
               serviceName: {{ .Release.Name }}-users
               servicePort: {{ .Values.users.httpPort }}
