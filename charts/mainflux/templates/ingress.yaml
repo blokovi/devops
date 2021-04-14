@@ -51,10 +51,6 @@ spec:
     - host: "{{ .Values.ingress.hostname }}"
       http:
         paths:
-          - path: /(users?.*)
-            backend:
-              serviceName: {{ .Release.Name }}-users
-              servicePort: {{ .Values.users.httpPort }}
           - path: /(password?.*)
             backend:
               serviceName: {{ .Release.Name }}-users
@@ -202,3 +198,31 @@ data:
 metadata:
   name: udp-services
   namespace: ingress-nginx
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      limit_except OPTIONS GET HEAD PUT DELETE  {
+          deny all;
+      }
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+{{- if .Values.ingress.annotations }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+{{- end }}
+{{- if .Values.ingress.labels }}
+  labels:
+{{ toYaml .Values.ingress.labels | indent 4 }}
+{{- end }}
+  name: {{ .Release.Name }}-nginx-rewrite-ingress-users
+spec:
+  rules:
+    - host: "{{ .Values.ingress.hostname }}"
+      http:
+        paths:
+          - path: /(users?.*)
+            backend:
+              serviceName: {{ .Release.Name }}-users
+              servicePort: {{ .Values.users.httpPort }}
